@@ -1,0 +1,10 @@
+DROP DATABASE IF EXISTS bai_tap;
+CREATE DATABASE IF NOT EXISTS bai_tap;
+USE bai_tap;
+
+CREATE TABLE Student (
+	id 		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` 	VARCHAR(255),
+    age 	SMALLINT CHECK(age > 0),
+    country VARCHAR(255)
+);

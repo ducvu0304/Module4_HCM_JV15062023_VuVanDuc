@@ -37,7 +37,10 @@ CREATE TABLE phieu_xuat(
     slg_xuat SMALLINT,
     ngay_xuat DATE,
 	ma_vtu INT,
-    FOREIGN KEY (ma_vtu) REFERENCES vat_tu(ma_vtu) ON UPDATE CASCADE ON DELETE SET NULL
+    FOREIGN KEY (ma_vtu) 
+    REFERENCES vat_tu(ma_vtu) 
+		ON UPDATE CASCADE
+		ON DELETE SET NULL
 );
 
 
