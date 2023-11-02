@@ -201,4 +201,135 @@ WHERE b.customer_id LIKE('KH01')
 HAVING month(export_date) BETWEEN 4 AND 6 ;
 
 -- Exercise 6.18
+SELECT 
+	ProductTbl.ProductId,
+    ProductTbl.ProductName,
+	ProductTbl.CategoryName,
+    ProductTbl.Unit
+FROM (
+		SELECT 
+			p.id ProductId, p.name ProductName, c.name CategoryName, p.unit Unit
+		FROM product p
+			INNER JOIN  category c ON c.id = p.category_id
+	)ProductTbl
+	LEFT JOIN 
+    (
+		SELECT 
+			bd.product_id ProductId, bd.quantity Quantity
+		FROM bill b 
+			INNER JOIN billdetail bd ON bd.bill_id = b.id
+		WHERE
+			year(b.export_date) = 2018 AND
+			(month(b.export_date) BETWEEN 1 AND 6)
+    )BillTbl
+    ON ProductTbl.ProductId = BillTbl.ProductId
+GROUP BY ProductTbl.ProductId
+HAVING SUM(BillTbl.Quantity) IS NULL
+ORDER BY ProductTbl.ProductId;
 
+-- Exercise 6.19
+SELECT 
+	p.id,
+    p.name,
+    p.address,
+    p.phone_number
+FROM provider p
+	LEFT JOIN(
+				SELECT 
+					r.provider_id ProviderId,
+					sum(rd.quantity) Quantity 
+				FROM receipt r
+					INNER JOIN receiptdetail rd ON rd.receipt_id = r.id
+				WHERE 
+					YEAR(r.import_date) = 2018 AND 
+					(month(r.import_date) BETWEEN 4 AND 6)
+				GROUP BY r.provider_id
+			)ReceiptTbl on ReceiptTbl.ProviderId = p.id
+WHERE  ReceiptTbl.Quantity IS NULL;
+
+-- Exercise 6.20
+SELECT 
+    c.name,
+    sum(bd.quantity * bd.price) total
+FROM bill b
+	INNER JOIN billdetail bd ON bd.bill_id = b.id
+    INNER JOIN customer c  ON c.id =  b.customer_id
+WHERE month(b.export_date) <= 6
+GROUP BY b.customer_id
+ORDER BY total DESC
+LIMIT 1;
+
+-- Exercise 6.21
+SELECT 
+	c.id, 
+    ifnull(BillTbl.Quantity, 0) QuantityTotal
+FROM customer c
+	LEFT JOIN 
+			(
+			SELECT 
+				b.customer_id CustomerId,
+				sum(bd.quantity) Quantity 
+			FROM bill b 
+				INNER JOIN billdetail bd ON bd.bill_id = b.id
+			GROUP BY b.customer_id      
+            )BillTbl
+    ON BillTbl.CustomerId = c.id;
+    
+-- Exercise 6.22
+SELECT 
+	e.id, 
+    e.full_name,
+    BillTbl.CustomerName
+FROM employee e
+	LEFT JOIN(SELECT 
+				b.employee_id EmployeeId, 
+				c.name CustomerName
+			  FROM bill b
+				INNER JOIN customer c ON c.id = b.customer_id	
+			)BillTbl ON BillTbl.EmployeeId = e.id;
+            
+-- Exercise 6.23
+SELECT 
+	IF(gender = 1, 'Men', 'Women') `gender`,
+    COUNT(gender) `count`
+FROM employee
+GROUP BY gender;
+
+-- Exercise 6.24
+SELECT 
+	id, 
+    full_name, 
+    (year(now()) - year(dob)) yoj
+FROM employee;
+
+-- Exercise 6.25
+SELECT 
+	id,
+    full_name,
+CASE
+	WHEN (gender = 1 AND (year(now()) - year(birth_day)) >= 60) THEN 'Nghỉ hưu'
+    WHEN (gender = 0 AND (year(now()) - year(birth_day)) >= 55) THEN 'Nghỉ hưu'
+	ELSE 'Không nghỉ hưu'
+END as Status
+FROM employee;
+
+-- Exercise 6.26
+SELECT 
+	id,
+    full_name,
+CASE
+	WHEN ((year(now()) - year(dob)) < 1) THEN 200000
+    WHEN ((year(now()) - year(dob)) <= 3) THEN 400000
+	WHEN ((year(now()) - year(dob)) <= 5) THEN 600000
+	WHEN ((year(now()) - year(dob)) <= 10) THEN 800000
+	ELSE 1000000
+END as Bonus
+FROM employee;
+
+-- Exercise 6.27
+
+-- Exercise 6.28
+-- Exercise 6.29
+-- Exercise 6.30
+-- Exercise 6.31
+-- Exercise 6.32

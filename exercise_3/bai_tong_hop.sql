@@ -122,12 +122,12 @@ VALUES			 	('KH01'	, 'Nguyễn Văn A',	'1980-01-20'),
 					('KH12'	, 'Nguyễn Thị I',	'1987-11-17'),
 					('KH13'	, 'Nguyễn Văn L',	'1987-01-20');
 
-INSERT INTO Employee(id	   , 	full_name	 	, 	gender	, address	, birth_day		, birth_place, 	management_id)
-VALUES			 	('NV01', 	'Trần Văn A'	, 	TRUE	, 'Tân Bình', '1991-10-10'	, 'Bình Định',	'E001'),
-					('NV02', 	'Trần Thị B'	, 	FALSE 	, 'Tân Bình', '1994-12-10'	, 'Bình Định',	'E002'),
-					('NV03', 	'Trần Văn C'	, 	TRUE	, 'Tân Bình', '1995-5-10'	, 'Bình Định',	'E001'),
-					('NV04', 	'Trần Thị D'	, 	FALSE 	, 'Tân Bình', '1996-12-10'	, 'Bình Định',	'E001'),
-					('NV05', 	'Trần Văn E'	, 	TRUE	, 'Tân Bình', '1990-3-10'	, 'Bình Định',	'E002');
+INSERT INTO Employee(id	   , 	full_name	 	, 	gender	, address	, birth_day		, birth_place, 	management_id , 	dob)
+VALUES			 	('NV01', 	'Trần Văn A'	, 	TRUE	, 'Tân Bình', '1963-10-10'	, 'Bình Định',	'E001'		  , '2012-02-15'),
+					('NV02', 	'Trần Thị B'	, 	FALSE 	, 'Tân Bình', '1994-12-10'	, 'Bình Định',	'E002'		  ,	'2014-12-11'),
+					('NV03', 	'Trần Văn C'	, 	TRUE	, 'Tân Bình', '1995-5-10'	, 'Bình Định',	'E001'		  ,	'2015-08-12'),
+					('NV04', 	'Trần Thị D'	, 	FALSE 	, 'Tân Bình', '1996-12-10'	, 'Bình Định',	'E001'		  ,	'2019-09-01'),
+					('NV05', 	'Trần Văn E'	, 	TRUE	, 'Tân Bình', '1990-3-10'	, 'Bình Định',	'E002'		  ,	'2022-02-25');
 
 INSERT INTO Provider(id		, `name`	,  address	, 	phone_number	, email)
 VALUES				('PD001', 'Nike'	, 'Tan Binh', 	'0908666666'	, 'Nike@gmail.com'),
@@ -160,16 +160,16 @@ VALUES			 	('SP01'	, 	'CG01'	,		'METASPEED EDGE+'		,	'đôi'	),
 					('SP16'	, 	'CG04'	,		'SKY ELITE FF MT 2'	 	,	'đôi'	);
                     
 INSERT INTO Receipt	(id		, 	employee_id	,	provider_id	,	import_date	)
-VALUES			 	('RC001', 	'NV02'	,		'PD002'		,	'2018-1-20'),
+VALUES			 	('RC001', 	'NV02'	,		'PD001'		,	'2018-1-20'),
 					('RC002', 	'NV02'	,		'PD002'		,	'2018-2-23'),
-					('RC003', 	'NV03'	,		'PD002'		,	'2018-3-02'),
-					('RC004', 	'NV02'	,		'PD002'		,	'2018-5-20'),
+					('RC003', 	'NV03'	,		'PD003'		,	'2018-3-02'),
+					('RC004', 	'NV02'	,		'PD001'		,	'2018-5-20'),
 					('RC005', 	'NV02'	,		'PD002'		,	'2018-6-10'),
-					('RC006', 	'NV03'	,		'PD002'		,	'2018-6-20'),
-					('RC007', 	'NV04'	,		'PD002'		,	'2018-9-13'),
-					('RC008', 	'NV02'	,		'PD002'		,	'2018-10-5'),
+					('RC006', 	'NV03'	,		'PD003'		,	'2018-6-20'),
+					('RC007', 	'NV04'	,		'PD001'		,	'2018-9-13'),
+					('RC008', 	'NV02'	,		'PD003'		,	'2018-10-5'),
 					('RC009', 	'NV03'	,		'PD002'		,	'2018-11-10'),
-					('RC010', 	'NV04'	,		'PD002'	 	,	'2018-12-20');
+					('RC010', 	'NV04'	,		'PD001'	 	,	'2018-12-20');
                     
 INSERT INTO ReceiptDetail	(receipt_id	, 	product_id	,	quantity,	import_price)
 VALUES			 			('RC001'	, 	'SP01'		,	5		,	1200		),
