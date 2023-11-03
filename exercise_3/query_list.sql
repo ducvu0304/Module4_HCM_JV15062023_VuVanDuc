@@ -68,15 +68,19 @@ SELECT
     bd.quantity,
     bd.price,
     bd.quantity * bd.price total
-FROM billdetail bd
-	INNER JOIN bill b ON b.id = bd.bill_id
-	INNER JOIN customer c ON c.id = b.customer_id
-    INNER JOIN product p ON p.id = bd.product_id
+FROM 
+	billdetail bd
+		INNER JOIN 
+	bill b ON b.id = bd.bill_id
+		INNER JOIN 
+	customer c ON c.id = b.customer_id
+		INNER JOIN 
+	product p ON p.id = bd.product_id
 WHERE month(b.export_date) <= 6;
 
 -- Exercise 6.7
 SELECT * 
-FROM bai_tap_th_01.customer
+FROM customer
 WHERE month(birth_day) = month(now());
 
 -- Exercise 6.8
@@ -89,10 +93,14 @@ SELECT
     bd.quantity, 
     bd.price,
     bd.quantity * bd.price total
-FROM bill b
-	INNER JOIN employee e ON e.id = b.employee_id
-    INNER JOIN billdetail bd ON bd.bill_id = b.id
-    INNER JOIN product p ON p.id = bd.product_id
+FROM 
+	bill b
+		INNER JOIN 
+	employee e ON e.id = b.employee_id
+		INNER JOIN 
+	billdetail bd ON bd.bill_id = b.id
+		INNER JOIN 
+	product p ON p.id = bd.product_id
 WHERE b.export_date BETWEEN '2018-04-15' AND '2018-05-15';
 
 -- Exercise 6.9
@@ -102,9 +110,12 @@ SELECT
     b.customer_id, 
     c.name,
     bd.quantity * bd.price total
-FROM bill b
-	INNER JOIN customer c ON c.id = b.customer_id
-    INNER JOIN billdetail bd ON bd.bill_id = b.id
+FROM 
+	bill b
+		INNER JOIN 
+	customer c ON c.id = b.customer_id
+		INNER JOIN 
+	billdetail bd ON bd.bill_id = b.id
 ORDER BY b.id;
 
 -- Exercise 6.10
@@ -206,20 +217,23 @@ SELECT
     ProductTbl.ProductName,
 	ProductTbl.CategoryName,
     ProductTbl.Unit
-FROM (
-		SELECT 
-			p.id ProductId, p.name ProductName, c.name CategoryName, p.unit Unit
-		FROM product p
-			INNER JOIN  category c ON c.id = p.category_id
+FROM
+	(SELECT 
+		p.id ProductId, p.name ProductName, c.name CategoryName, p.unit Unit
+	FROM 
+		product p
+	INNER JOIN  
+		category c ON c.id = p.category_id
 	)ProductTbl
-	LEFT JOIN 
-    (
-		SELECT 
-			bd.product_id ProductId, bd.quantity Quantity
-		FROM bill b 
-			INNER JOIN billdetail bd ON bd.bill_id = b.id
-		WHERE
-			year(b.export_date) = 2018 AND
+LEFT JOIN 
+    (SELECT 
+		bd.product_id ProductId, bd.quantity Quantity
+	 FROM 
+		bill b 
+	 INNER JOIN 
+		billdetail bd ON bd.bill_id = b.id
+	 WHERE
+		year(b.export_date) = 2018 AND
 			(month(b.export_date) BETWEEN 1 AND 6)
     )BillTbl
     ON ProductTbl.ProductId = BillTbl.ProductId
@@ -233,27 +247,34 @@ SELECT
     p.name,
     p.address,
     p.phone_number
-FROM provider p
-	LEFT JOIN(
-				SELECT 
-					r.provider_id ProviderId,
-					sum(rd.quantity) Quantity 
-				FROM receipt r
-					INNER JOIN receiptdetail rd ON rd.receipt_id = r.id
-				WHERE 
-					YEAR(r.import_date) = 2018 AND 
-					(month(r.import_date) BETWEEN 4 AND 6)
-				GROUP BY r.provider_id
-			)ReceiptTbl on ReceiptTbl.ProviderId = p.id
-WHERE  ReceiptTbl.Quantity IS NULL;
+FROM 
+	provider p
+LEFT JOIN(
+	SELECT 
+		r.provider_id ProviderId,
+		sum(rd.quantity) Quantity 
+	 FROM 
+		receipt r
+			INNER JOIN 
+		receiptdetail rd ON rd.receipt_id = r.id
+	 WHERE 
+		YEAR(r.import_date) = 2018 AND 
+		(month(r.import_date) BETWEEN 4 AND 6)
+	 GROUP BY r.provider_id
+) AS ReceiptTbl on ReceiptTbl.ProviderId = p.id
+WHERE 
+	ReceiptTbl.Quantity IS NULL;
 
 -- Exercise 6.20
 SELECT 
     c.name,
     sum(bd.quantity * bd.price) total
-FROM bill b
-	INNER JOIN billdetail bd ON bd.bill_id = b.id
-    INNER JOIN customer c  ON c.id =  b.customer_id
+FROM 
+	bill b
+		INNER JOIN 
+	billdetail bd ON bd.bill_id = b.id
+		INNER JOIN 
+	customer c  ON c.id =  b.customer_id
 WHERE month(b.export_date) <= 6
 GROUP BY b.customer_id
 ORDER BY total DESC
@@ -263,31 +284,35 @@ LIMIT 1;
 SELECT 
 	c.id, 
     ifnull(BillTbl.Quantity, 0) QuantityTotal
-FROM customer c
-	LEFT JOIN 
-			(
-			SELECT 
-				b.customer_id CustomerId,
-				sum(bd.quantity) Quantity 
-			FROM bill b 
-				INNER JOIN billdetail bd ON bd.bill_id = b.id
-			GROUP BY b.customer_id      
-            )BillTbl
-    ON BillTbl.CustomerId = c.id;
-    
+FROM 
+	customer c
+		LEFT JOIN 
+	(SELECT 
+		b.customer_id CustomerId,
+		sum(bd.quantity) Quantity 
+	 FROM 
+		bill b 
+			INNER JOIN 
+		billdetail bd ON bd.bill_id = b.id
+	 GROUP BY b.customer_id)BillTbl ON BillTbl.CustomerId = c.id;
+
 -- Exercise 6.22
 SELECT 
 	e.id, 
     e.full_name,
     BillTbl.CustomerName
-FROM employee e
-	LEFT JOIN(SELECT 
-				b.employee_id EmployeeId, 
-				c.name CustomerName
-			  FROM bill b
-				INNER JOIN customer c ON c.id = b.customer_id	
-			)BillTbl ON BillTbl.EmployeeId = e.id;
-            
+FROM 
+	employee e
+		LEFT JOIN
+	(SELECT 
+		b.employee_id EmployeeId, 
+		c.name CustomerName
+	FROM 
+		bill b
+			INNER JOIN
+		customer c ON c.id = b.customer_id	
+	)BillTbl ON BillTbl.EmployeeId = e.id;
+    
 -- Exercise 6.23
 SELECT 
 	IF(gender = 1, 'Men', 'Women') `gender`,
