@@ -1,0 +1,14 @@
+.separate {
+    border-bottom: rgb(120, 116, 116) solid 1px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 100px;
+    height: 100px;
+    padding: 5px 0;
+}
