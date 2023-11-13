@@ -7,7 +7,8 @@
     <jsp:include page="../assets/head.jsp"></jsp:include>
 </head>
 <body>
-    <h1>Danh sách khách hàng</h1>
+    <h1>Danh sách sản phẩm</h1>
+    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Product?action=ADD">Thêm mới sản phẩm</a>
     <table class="table">
         <thead>
         <tr class="">
@@ -27,9 +28,9 @@
                 <td>${c.price}</td>
                 <td><img width="100" height="100" style="object-fit: cover" src="${c.img}" alt="${c.name}"></td>
                 <td>${c.description?"Nam":"Nữ"}</td>
-                <td><a href="<%=request.getContextPath()%>/CustomerController?action=DETAIL&id=${c.id}" class="btn btn-info">Detail</a></td>
-                <td><a href="<%=request.getContextPath()%>/CustomerController?action=EDIT&id=${c.id}" class="btn btn-warning">Edit</a></td>
-                <td><a href="<%=request.getContextPath()%>/CustomerController?action=DELETE&id=${c.id}" onclick="return confirm('Bạn có chắc muốn xóa không?')" class="btn btn-danger">Delete</a></td>
+                <td><a href="<%=request.getContextPath()%>/Product?action=DETAIL&id=${c.id}" class="btn btn-info">Detail</a></td>
+                <td><a href="<%=request.getContextPath()%>/Product?action=EDIT&id=${c.id}" class="btn btn-warning">Edit</a></td>
+                <td><a href="<%=request.getContextPath()%>/Product?action=DELETE&id=${c.id}" onclick="return confirm('Bạn có chắc muốn xóa không?')" class="btn btn-danger">Delete</a></td>
             </tr>
         </c:forEach>
 

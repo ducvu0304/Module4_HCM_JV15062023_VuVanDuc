@@ -7,6 +7,7 @@
   <title>JSP - Hello World</title>
 </head>
 <body>
-    <a href="<%=request.getContextPath()%>/Product?action=FINDALL">Danh sách khách hàng</a>
+    <jsp:forward page="/Product?action=FINDALL"></jsp:forward>
+<%--    <jsp:forward page="WEB-INF/views/404.jsp"></jsp:forward>--%>
 </body>
 </html>

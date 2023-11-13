@@ -23,6 +23,13 @@ public class Product {
         this.img = img;
     }
 
+    public Product(int id, String name, double price, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
+
     public static int getCount() {
         return count;
     }

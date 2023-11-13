@@ -5,6 +5,7 @@ import com.vn.productmanagement.model.Product;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductService implements IProductService{
     private static List<Product> list = new ArrayList<>();
@@ -23,15 +24,8 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Product findProductById(int id) {
-        if (!list.isEmpty()) {
-            for (Product product: list) {
-                if (product.getId() == id){
-                    return product;
-                }
-            }
-        }
-        return null;
+    public Optional<Product> findProductById(int id) {
+       return list.stream().filter(product -> product.getId() == id).findFirst();
     }
 
     @Override
@@ -60,11 +54,14 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public boolean createProduct(Product product) {
-        if (product != null) {
+    public void save(Product product) {
+        Product oldCus  = findProductById(product.getId()).orElse(null);
+        if(oldCus !=null){
+            // sửa
+            list.set(list.indexOf(oldCus),oldCus);
+        }else {
+            // thêm mới
             list.add(product);
-            return true;
         }
-        return false;
     }
 }
