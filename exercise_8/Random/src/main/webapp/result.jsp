@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,6 +20,9 @@
             <th>STT</th>
             <th>Number</th>
         </tr>
+        <%
+            List list =  new ArrayList<>();
+        %>
         <%
             int[] numbers = (int[]) request.getAttribute("numbers");
             for (int i = 0; i < numbers.length; i++) {
